@@ -11,7 +11,7 @@
 * `bin/rake db:create`
 * `bin/rails s`
 
-### Tests
+### Tests (currently do not exist)
 * `rails test`
 
 ### Features

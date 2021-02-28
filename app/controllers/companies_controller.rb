@@ -1,6 +1,10 @@
 class CompaniesController < ApplicationController
   def index
-    render json: Company.all
+    if valid_query?
+      render json: index_collection
+    else
+      render :bad_request
+    end
   end
 
   def show
@@ -8,8 +12,7 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    # bang or not?
-    Company.create! company_params
+    render json: Company.create!(company_params)
   end
 
   def update
@@ -32,5 +35,19 @@ class CompaniesController < ApplicationController
 
   def company
     @company ||= Company.find params.require(:id)
+  end
+
+  def query_params
+    params.permit :parameter, :value, :format
+  end
+
+  def valid_query?
+    query_params[:parameter].blank? || Company::QUERYABLE_FIELDS.include?(query_params[:parameter])
+  end
+
+  def index_collection
+    return Company.all unless query_params[:parameter]
+
+    Company.where("#{query_params[:parameter]} ilike ?", "%#{query_params[:value]}%")
   end
 end

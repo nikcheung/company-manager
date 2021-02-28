@@ -5,12 +5,25 @@ const headers = {
   "Content-Type": "application/json"
 }
 
-function fetchCompanies() {
-  return fetch(companies_path()).then(response => response.json())
+function parse(response) {
+  return response.json()
 }
 
-function fetchCompany() {
-  return fetch(company_path()).then(response => response.json())
+function getIndexUrl(query) {
+  if (!query?.value) {
+    return companies_path()
+  } else {
+    return `${companies_path()}/?parameter=${query.parameter}&value=${query.value}`
+  }
+}
+
+function fetchCompanies(query) {
+  const url = getIndexUrl(query)
+  return fetch(url).then(parse)
+}
+
+function fetchCompany(id) {
+  return fetch(company_path(id)).then(parse)
 }
 
 function createCompany(attributes) {
@@ -18,14 +31,22 @@ function createCompany(attributes) {
     method: `POST`,
     body: JSON.stringify(attributes),
     headers: headers
-  })
+  }).then(parse)
+}
+
+function updateCompany(attributes) {
+  return fetch(company_path(attributes.id), {
+    method: `PATCH`,
+    body: JSON.stringify(attributes),
+    headers: headers
+  }).then(parse)
 }
 
 function deleteCompany(id) {
   return fetch(company_path(id), {
     method: `DELETE`,
     headers: headers
-  })
+  }).then(parse)
 }
 
-export { fetchCompanies, fetchCompany, createCompany, deleteCompany }
+export { fetchCompanies, fetchCompany, createCompany, deleteCompany, updateCompany }

@@ -24,7 +24,7 @@
 * [ ] Backend
   * [x] Table for companies
   * [x] CRUD for companies (json)
-  * [ ] Ability to filter companies#index
+  * [x] Ability to filter companies#index
   * [ ] Pagination
   * [ ] Authentication
   * [ ] Tenancy
@@ -34,10 +34,11 @@
   * [x] Company table component
   * [x] Company component, with delete button
   * [x] Company creation form
-  * [ ] Company show page
-  * [ ] Company edit page
+  * [x] Company show page
+  * [x] Company edit page
   * [ ] Pagination controls
   * [ ] Login page
+  * [ ] Handle refresh
 * [ ] Tests
   * [ ] End to end
   * [ ] Companies controller

@@ -19,7 +19,7 @@ const CompanyForm = () => {
     if (existingCompany) {
       updateCompany({ id: existingCompany.id, ...params }).then(() => history.push(`/`))
     } else {
-      createCompany(params)
+      createCompany(params).then(() => history.go(0))
     }
     event.preventDefault()
   }
